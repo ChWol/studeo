@@ -7,36 +7,35 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-
-
-const useStyles = makeStyles({
-    list: {
-        width: 250,
-    },
-    fullList: {
-        width: 'auto',
-    },
-});
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import SettingsIcon from '@material-ui/icons/Settings';
+import {IconButton} from "@material-ui/core";
 
 export default function SideMenu() {
-    const classes = useStyles();
     const [state, setState] = React.useState({
-        top: false,
-        left: false,
-        bottom: false,
-        right: false,
+        left: false
     });
+
+    function getIcon(index) {
+        switch (index) {
+            case 0:
+                return <MailIcon/>;
+            case 1:
+                return <ContactSupportIcon/>;
+            default:
+                return <SettingsIcon/>
+        }
+    }
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setState({...state, [anchor]: open});
     };
+
 
     const list = (anchor) => (
         <div
@@ -45,9 +44,9 @@ export default function SideMenu() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                {['Mitteilungen', 'Support', 'Einstellungen'].map((text, index) => (
                     <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                        <ListItemIcon>{getIcon(index)}</ListItemIcon>
                         <ListItemText primary={text}/>
                     </ListItem>
                 ))}
@@ -58,14 +57,14 @@ export default function SideMenu() {
 
     return (
         <div>
-                <Button onClick={toggleDrawer("left", true)}>
-                    <div style={{color: "white"}}>
-                        <MenuIcon />
-                    </div>
-                </Button>
-                <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
-                    {list("left")}
-                </Drawer>
+            <IconButton edge="start" color="inherit" style={{paddingBottom: "8px"}}>
+                <div style={{color: "white"}} onClick={toggleDrawer("left", true)}>
+                    <MenuIcon/>
+                </div>
+            </IconButton>
+            <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
+                {list("left")}
+            </Drawer>
         </div>
     );
 }

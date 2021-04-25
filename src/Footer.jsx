@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         top: 'auto',
         bottom: 0,
+        backgroundColor: "#087cfc"
     },
     grow: {
         flexGrow: 1,
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         right: 0,
         margin: '0 auto',
+        backgroundColor: "#ff8c24"
     },
 }));
 
@@ -45,19 +47,19 @@ export default function BottomAppBar() {
     const [recording, setRecording] = useState(false);
 
     return (
-        <React.Fragment>
-            <AppBar position="fixed" color="primary" className={classes.appBar}>
+        <div>
+            <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Link to="/subjects">
                         <div style={{color: 'white'}}>
-                            <IconButton edge="start" color="inherit" aria-label="open drawer">
+                            <IconButton edge="start" color="inherit">
                                 <BookIcon />
                             </IconButton>
                         </div>
                     </Link>
-                    <Link to="/">
+                    <Link to="/start">
                         <div style={{color: 'white'}}>
-                            <Fab color="secondary" aria-label="add" className={classes.fabButton} onClick={() => setRecording(!recording)}>
+                            <Fab color="primary" className={classes.fabButton} onClick={() => setRecording(!recording)}>
                                 {recording ? <GraphicEqIcon /> :  <MicIcon />}
                             </Fab>
                         </div>
@@ -72,6 +74,6 @@ export default function BottomAppBar() {
                     </Link>
                 </Toolbar>
             </AppBar>
-        </React.Fragment>
+        </div>
     );
 }
