@@ -18,12 +18,17 @@ const useStyles = makeStyles({
     },
 });
 
-const SpeechToText = () => {
+const SpeechToText = (props) => {
     const classes = useStyles();
     const {transcript, resetTranscript} = useSpeechRecognition()
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return null;
+    }
+
+    function end() {
+        SpeechRecognition.stopListening();
+        props.setDone(true);
     }
 
     return (
@@ -39,7 +44,7 @@ const SpeechToText = () => {
 
             <Button
                 color="secondary"
-                onClick={() => SpeechRecognition.stopListening()}
+                onClick={() => end()}
                 variant="contained"
                 endIcon={<PauseIcon/>}
             >
