@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import typ from './images/typ.png';
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
+import SpeechToText from "./SpeechToText";
 
 export default function MainPage(props) {
     const [thema, setThema] = useState("Fotosynthese");
@@ -43,7 +44,7 @@ export default function MainPage(props) {
                             ))}
                         </TextField>
                     </p>
-
+                    <SpeechToText />
                 </p>
             </div>
         </React.Fragment>
