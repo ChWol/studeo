@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Header() {
+export default function Header(props) {
     const classes = useStyles();
     return (
         <div>
@@ -24,7 +24,7 @@ export default function Header() {
                     <Typography variant="h5" className={classes.title}>
                         Studeo
                     </Typography>
-                    <Link to="/user">
+                    <Link to="/user" onClick={() => props.setHome(false)}>
                         <div style={{color: 'white'}}>
                             <IconButton
                                 aria-controls="menu-appbar"

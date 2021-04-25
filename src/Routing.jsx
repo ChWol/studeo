@@ -9,20 +9,18 @@ import Subjects from "./Subjects";
 
 const Routing = () => {
     const [name, setName] = useState("Christopher");
+    const [subject, setSubject] = useState("Biologie");
 
     return(
         <Switch>
-            <Route exact path="/start">
-                <MainPage name={name}/>
-            </Route>
             <Route exact path="/">
-                <MainPage name={name}/>
+                <MainPage name={name} subject={subject}/>
             </Route>
             <Route exact path="/user">
                 <UserSettings name={name} setName={setName}/>
             </Route>
             <Route exact path="/subjects">
-                <Subjects />
+                <Subjects subject={subject} setSubject={setSubject}/>
             </Route>
         </Switch>
     );

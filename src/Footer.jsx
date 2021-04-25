@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import TodayIcon from '@material-ui/icons/Today';
 import GraphicEqIcon from '@material-ui/icons/GraphicEq';
 import {Link} from "react-router-dom";
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -42,30 +43,45 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function BottomAppBar() {
+export default function BottomAppBar(props) {
     const classes = useStyles();
     const [recording, setRecording] = useState(false);
+
+    function homeButton() {
+        if (props.home) {
+            setRecording(!recording);
+        }
+        else {
+            setRecording(false);
+        }
+        props.setHome(true);
+    }
 
     return (
         <div>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <Link to="/subjects">
+                    <Link to="/subjects" onClick={() => props.setHome(false)}>
                         <div style={{color: 'white'}}>
                             <IconButton edge="start" color="inherit">
                                 <BookIcon />
                             </IconButton>
                         </div>
                     </Link>
-                    <Link to="/start">
+                    <Link to="/" onClick={() => homeButton()}>
                         <div style={{color: 'white'}}>
-                            <Fab color="primary" className={classes.fabButton} onClick={() => setRecording(!recording)}>
-                                {recording ? <GraphicEqIcon /> :  <MicIcon />}
+                            <Fab color="primary" className={classes.fabButton}>
+                                {
+                                    props.home ?
+                                        (recording ? <GraphicEqIcon /> :  <MicIcon />)
+                                        :
+                                        <HomeOutlinedIcon/>
+                                }
                             </Fab>
                         </div>
                     </Link>
                     <div className={classes.grow} />
-                    <Link to="/">
+                    <Link to="/" onClick={() => props.setHome(false)}>
                         <div style={{color: 'white'}}>
                             <IconButton edge="end" color="inherit" aria-label="open drawer">
                                 <TodayIcon />

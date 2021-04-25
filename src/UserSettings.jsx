@@ -8,8 +8,14 @@ import ListItem from '@material-ui/core/ListItem';
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
-import PersonIcon from '@material-ui/icons/Person';
+import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import BrushOutlinedIcon from "@material-ui/icons/BrushOutlined";
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
+import FormatListNumberedOutlinedIcon from '@material-ui/icons/FormatListNumberedOutlined';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -29,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UserSettings(props) {
     const classes = useStyles();
 
-    const [mail, setMail] = useState("ch.wolter@tum.de");
+    const [mail, setMail] = useState("ch.wolters@tum.de");
     const stati = ["Schüler", "Lehrer"];
     const [status, setStatus] = useState("Schüler");
     const forms = ["Grundschule", "Mittelschule", "Realschule", "Gymnasium"];
@@ -37,6 +43,16 @@ export default function UserSettings(props) {
     const regions = ["Bayern", "Berlin", "Sachsen"];
     const [region, setRegion] = useState("Bayern");
     const [age, setAge] = useState(11);
+
+    function evalError(year) {
+        switch (form) {
+            case "Grundschule": return (year < 1) || (year > 4);
+            case "Mittelschule": return (year < 5) || (year > 9);
+            case "Realschule": return (year < 5) || (year > 10);
+            case "Gymnasium": return (year < 5) || (year > 12);
+            default: return true;
+        }
+    }
 
     //ToDo: Email Regex, states for each input, store in browser storage, Input Adornment, select, validation, number input
     // required
@@ -51,41 +67,33 @@ export default function UserSettings(props) {
 
                 <List className={classes.list}>
                     <ListItem>
-                        <div className={classes.margin}>
-                            <Grid container spacing={1} alignItems="flex-end">
-                                <Grid item>
-                                    <PersonIcon/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField
-                                        id="standard-basic"
-                                        label="Name"
-                                        defaultValue={props.name}
-                                        onChange={event => props.setName(event.target.value)}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </div>
-                    </ListItem>
-                    <ListItem>
-                        <div className={classes.margin}>
-                            <Grid container spacing={1} alignItems="flex-end">
-                                <Grid item>
-                                    <MailOutlineIcon/>
-                                </Grid>
-                                <Grid item>
-                                    <TextField
-                                        id="standard-basic"
-                                        label="Mail"
-                                        defaultValue={mail}
-                                        onChange={event => setMail(event.target.value)}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </div>
+                        <ListItemAvatar>
+                            <PersonOutlineOutlinedIcon/>
+                        </ListItemAvatar>
+                        <TextField
+                            id="standard-basic"
+                            label="Name"
+                            defaultValue={props.name}
+                            onChange={event => props.setName(event.target.value)}
+                        />
                     </ListItem>
 
                     <ListItem>
+                        <ListItemAvatar>
+                            <MailOutlineIcon/>
+                        </ListItemAvatar>
+                        <TextField
+                            id="standard-basic"
+                            label="Mail"
+                            defaultValue={mail}
+                            onChange={event => setMail(event.target.value)}
+                        />
+                    </ListItem>
+
+                    <ListItem>
+                        <ListItemAvatar>
+                            <PeopleAltOutlinedIcon/>
+                        </ListItemAvatar>
                         <TextField
                             id="standard-basic"
                             label="Status"
@@ -100,7 +108,11 @@ export default function UserSettings(props) {
                             ))}
                         </TextField>
                     </ListItem>
+
                     <ListItem>
+                        <ListItemAvatar>
+                            <SchoolOutlinedIcon/>
+                        </ListItemAvatar>
                         <TextField
                             id="standard-basic"
                             label="Schulform"
@@ -115,7 +127,11 @@ export default function UserSettings(props) {
                             ))}
                         </TextField>
                     </ListItem>
+
                     <ListItem>
+                        <ListItemAvatar>
+                            <PublicOutlinedIcon/>
+                        </ListItemAvatar>
                         <TextField
                             id="standard-basic"
                             label="Region"
@@ -130,10 +146,14 @@ export default function UserSettings(props) {
                             ))}
                         </TextField>
                     </ListItem>
+
                     <ListItem>
+                        <ListItemAvatar>
+                            <FormatListNumberedOutlinedIcon/>
+                        </ListItemAvatar>
                         <TextField
-                            helperText={((age < 1) || (age > 12)) ? "Nur Klasse 1-12!" : ""}
-                            error={(age < 1) || (age > 12)}
+                            helperText={evalError(age) ? "Keine gültige Klassenstufe!" : ""}
+                            error={evalError(age)}
                             type="number"
                             id="standard-basic"
                             label="Klassenstufe"
