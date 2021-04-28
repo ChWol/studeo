@@ -12,6 +12,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {IconButton} from "@material-ui/core";
+import SubjectIcon from '@material-ui/icons/Subject';
+import GavelIcon from '@material-ui/icons/Gavel';
 
 export default function SideMenu() {
     const [state, setState] = React.useState({
@@ -24,8 +26,12 @@ export default function SideMenu() {
                 return <MailIcon/>;
             case 1:
                 return <ContactSupportIcon/>;
-            default:
+            case 2:
                 return <SettingsIcon/>
+            case 3:
+                return <SubjectIcon/>
+            default:
+                return <GavelIcon/>
         }
     }
 
@@ -44,7 +50,7 @@ export default function SideMenu() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Mitteilungen', 'Support', 'Einstellungen'].map((text, index) => (
+                {['Mitteilungen', 'Hilfe', 'Einstellungen', 'Impressum', 'Datenschutz'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>{getIcon(index)}</ListItemIcon>
                         <ListItemText primary={text}/>

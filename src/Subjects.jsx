@@ -13,6 +13,12 @@ import CodeIcon from '@material-ui/icons/Code';
 import BookOutlinedIcon from '@material-ui/icons/BookOutlined';
 import BrushOutlinedIcon from '@material-ui/icons/BrushOutlined';
 import EuroIcon from '@material-ui/icons/Euro';
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
+import Alert from "@material-ui/lab/Alert";
+
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -47,66 +53,89 @@ const useStyles = makeStyles((theme) => ({
 export default function Subjects(props) {
     const classes = useStyles();
 
-    //ToDo: Suche, Fächer hinzufügen, wenn Klick dann zu Hauptscreen, Mikro Button solange zu Home machen
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     return (
         <React.Fragment>
             <CssBaseline/>
-            <Paper square className={classes.paper}>
+            <Paper square className={classes.paper} style={{padding: "0.8em"}}>
                 <Typography className={classes.text} variant="h5" gutterBottom>
                     Fächer
                 </Typography>
-                    <List className={classes.list}>
-                        <ListItem button onClick={() => props.setSubject("Biologie")}>
-                            <ListItemAvatar>
-                                <FingerprintIcon/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Biologie"}
-                                secondary={"Fotosynthese, Stoffwechsel, DNA, ..."}/>
-                        </ListItem>
-                        <ListItem button onClick={() => props.setSubject("Mathematik")}>
-                            <ListItemAvatar>
-                                <FunctionsIcon/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Mathematik"}
-                                secondary={"Graphen, Ableitung, Exponentialfunktionen, ..."}/>
-                        </ListItem>
-                        <ListItem button onClick={() => props.setSubject("Informatik")}>
-                            <ListItemAvatar>
-                                <CodeIcon/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Informatik"}
-                                secondary={"Objektorientierung, Formale Sprachen, Java, ..."}/>
-                        </ListItem>
-                        <ListItem button onClick={() => props.setSubject("Deutsch")}>
-                            <ListItemAvatar>
-                                <BookOutlinedIcon/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Deutsch"}
-                                secondary={"Klassik, Faust, Goethe, ..."}/>
-                        </ListItem>
-                        <ListItem button onClick={() => props.setSubject("Kunst")}>
-                            <ListItemAvatar>
-                                <BrushOutlinedIcon/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Kunst"}
-                                secondary={"Kunstgeschichte, Werkanalyse, Architektur, ..."}/>
-                        </ListItem>
-                        <ListItem button onClick={() => props.setSubject("Wirtschaft")}>
-                            <ListItemAvatar>
-                                <EuroIcon/>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Wirtschaft"}
-                                secondary={"Keynesianismus, Monetarismus, Magisches Sechseck, ..."}/>
-                        </ListItem>
-                    </List>
+                <List className={classes.list} onClick={() => handleClick()}>
+                    <ListItem button onClick={() => props.setSubject("Biologie")}>
+                        <ListItemAvatar>
+                            <FingerprintIcon/>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={"Biologie"}
+                            secondary={"Fotosynthese, Stoffwechsel, DNA, ..."}/>
+                    </ListItem>
+                    <ListItem button onClick={() => props.setSubject("Mathematik")}>
+                        <ListItemAvatar>
+                            <FunctionsIcon/>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={"Mathematik"}
+                            secondary={"Graphen, Ableitung, Exponentialfunktionen, ..."}/>
+                    </ListItem>
+                    <ListItem button onClick={() => props.setSubject("Informatik")}>
+                        <ListItemAvatar>
+                            <CodeIcon/>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={"Informatik"}
+                            secondary={"Objektorientierung, Formale Sprachen, Java, ..."}/>
+                    </ListItem>
+                    <ListItem button onClick={() => props.setSubject("Deutsch")}>
+                        <ListItemAvatar>
+                            <BookOutlinedIcon/>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={"Deutsch"}
+                            secondary={"Klassik, Faust, Goethe, ..."}/>
+                    </ListItem>
+                    <ListItem button onClick={() => props.setSubject("Kunst")}>
+                        <ListItemAvatar>
+                            <BrushOutlinedIcon/>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={"Kunst"}
+                            secondary={"Kunstgeschichte, Werkanalyse, Architektur, ..."}/>
+                    </ListItem>
+                    <ListItem button onClick={() => props.setSubject("Wirtschaft")}>
+                        <ListItemAvatar>
+                            <EuroIcon/>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={"Wirtschaft"}
+                            secondary={"Keynesianismus, Monetarismus, Magisches Sechseck, ..."}/>
+                    </ListItem>
+                </List>
             </Paper>
+            <div>
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
+                          anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'left',
+                          }}>
+                    <Alert onClose={handleClose} severity="success">
+                        Fach geändert: <b>{props.subject}</b>
+                    </Alert>
+                </Snackbar>
+            </div>
         </React.Fragment>
     );
 }

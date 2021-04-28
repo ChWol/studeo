@@ -7,11 +7,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import BrushOutlinedIcon from "@material-ui/icons/BrushOutlined";
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import FormatListNumberedOutlinedIcon from '@material-ui/icons/FormatListNumberedOutlined';
@@ -35,12 +33,12 @@ const useStyles = makeStyles((theme) => ({
 export default function UserSettings(props) {
     const classes = useStyles();
 
-    const [mail, setMail] = useState("ch.wolters@tum.de");
-    const stati = ["Schüler", "Lehrer"];
-    const [status, setStatus] = useState("Schüler");
+    const [mail, setMail] = useState("max@mail.de");
+    const stati = ["Schüler:in", "Lehrer:in"];
+    const [status, setStatus] = useState("Schüler:in");
     const forms = ["Grundschule", "Mittelschule", "Realschule", "Gymnasium"];
     const [form, setForm] = useState("Gymnasium");
-    const regions = ["Bayern", "Berlin", "Sachsen"];
+    const regions = ["Baden-Württemberg", "Bayern", "Berlin", "Brandenbrug", "Bremen", "Hamburg", "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz", "Saarland", "Sachsen-Anhalt", "Sachsen", "Schleswig-Holstein", "Thüringen"];
     const [region, setRegion] = useState("Bayern");
     const [age, setAge] = useState(11);
 
@@ -53,9 +51,6 @@ export default function UserSettings(props) {
             default: return true;
         }
     }
-
-    //ToDo: Email Regex, states for each input, store in browser storage, Input Adornment, select, validation, number input
-    // required
 
     return (
         <React.Fragment>

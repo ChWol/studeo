@@ -27,6 +27,7 @@ const SpeechToText = (props) => {
     }
 
     function end() {
+        props.setAnswer(transcript);
         SpeechRecognition.stopListening();
         props.setDone(true);
     }
