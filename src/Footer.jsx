@@ -48,7 +48,6 @@ export default function BottomAppBar(props) {
     // Storing the completed answer, stopping the recording in the end
     function end() {
         props.setAnswer(transcript);
-        resetTranscript();
         SpeechRecognition.stopListening();
         props.setDone(true);
     }
@@ -63,6 +62,7 @@ export default function BottomAppBar(props) {
             }
             else {
                 props.setAnswer("");
+                resetTranscript();
                 SpeechRecognition.startListening({continuous: true, language: 'de-DE'});
             }
             setRecording(!recording);
