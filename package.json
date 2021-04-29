@@ -1,7 +1,7 @@
 {
   "name": "studeo",
   "version": "0.1.0",
-  "homepage": "http://chwol.github.io/studeo",
+  "homepage": "https://chwol.github.io/studeo/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
