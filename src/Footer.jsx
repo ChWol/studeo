@@ -18,7 +18,7 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 // Styling from Material UI library
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     appBar: {
         top: 'auto',
         bottom: 0,
