@@ -5,7 +5,6 @@ import React, {useState} from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import typ from './images/typ.png';
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Timeline from '@material-ui/lab/Timeline';
@@ -20,6 +19,9 @@ import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied'
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
+
+// Own imports
+import typ from './images/boy.png';
 
 export default function MainPage(props) {
     // State controlling the selected topic
