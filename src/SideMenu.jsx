@@ -1,7 +1,8 @@
+// React imports
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+
+// Material UI library
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,6 +21,7 @@ export default function SideMenu() {
         left: false
     });
 
+    // Return the icon for the corresponding text
     function getIcon(index) {
         switch (index) {
             case 0:
@@ -42,7 +44,6 @@ export default function SideMenu() {
         setState({...state, [anchor]: open});
     };
 
-
     const list = (anchor) => (
         <div
             role="presentation"
@@ -63,8 +64,13 @@ export default function SideMenu() {
 
     return (
         <div>
-            <IconButton edge="start" color="inherit" style={{paddingBottom: "8px"}}>
-                <div style={{color: "white"}} onClick={toggleDrawer("left", true)}>
+            <IconButton
+                edge="start"
+                color="inherit"
+                style={{paddingBottom: "8px"}}
+                onClick={toggleDrawer("left", true)}
+            >
+                <div style={{color: "white"}}>
                     <MenuIcon/>
                 </div>
             </IconButton>

@@ -1,5 +1,9 @@
+// React imports
 import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {Link} from "react-router-dom";
+
+// Material UI library
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MicIcon from '@material-ui/icons/Mic';
@@ -8,23 +12,13 @@ import BookIcon from '@material-ui/icons/Book';
 import IconButton from "@material-ui/core/IconButton";
 import TodayIcon from '@material-ui/icons/Today';
 import GraphicEqIcon from '@material-ui/icons/GraphicEq';
-import {Link} from "react-router-dom";
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+
+// Speech recognition library
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
+// Styling from Material UI library
 const useStyles = makeStyles((theme) => ({
-    text: {
-        padding: theme.spacing(2, 2, 0),
-    },
-    paper: {
-        paddingBottom: 50,
-    },
-    list: {
-        marginBottom: theme.spacing(2),
-    },
-    subheader: {
-        backgroundColor: theme.palette.background.paper,
-    },
     appBar: {
         top: 'auto',
         bottom: 0,
@@ -46,74 +40,73 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BottomAppBar(props) {
     const classes = useStyles();
+    // State controlling if a recording process is running
     const [recording, setRecording] = useState(false);
+    // State storing the recognized spoken text
+    const {transcript} = useSpeechRecognition()
 
-    const {transcript, resetTranscript} = useSpeechRecognition()
-
-    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return null;
-    }
-
+    // Storing the completed answer, stopping the recording in the end
     function end() {
         props.setAnswer(transcript);
         SpeechRecognition.stopListening();
         props.setDone(true);
     }
 
+    // Behaviour on center-button-press
     function homeButton() {
-        if (props.home) {
-            if (recording) {
-                end();
-            }
-            else {
-                SpeechRecognition.startListening({language: 'de-DE'});
-            }
+        // Only functional behaviour on home page and if browser supports recognition
+        if (props.home && SpeechRecognition.browserSupportsSpeechRecognition()) {
+            // Either starting or stopping the current recording
+            recording ? end() : SpeechRecognition.startListening({continuous: true, language: 'de-DE'});
             setRecording(!recording);
         }
+        // Returning to home page
         else {
+            // Safety line
             setRecording(false);
+            props.setHome(true);
         }
-        props.setHome(true);
     }
 
     return (
         <div>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <Link to="/subjects" onClick={() => props.setHome(false)}>
-                        <div style={{color: 'white'}}>
-                            <IconButton edge="start" color="inherit">
-                                <BookIcon />
-                            </IconButton>
-                        </div>
+                    <Link
+                        to="/subjects"
+                        onClick={() => props.setHome(false)}
+                        style={{color: 'white'}}
+                    >
+                        <IconButton edge="start" color="inherit">
+                            <BookIcon/>
+                        </IconButton>
                     </Link>
-                    {!props.done ?
-                        <Link to="/" onClick={() => homeButton()}>
-                            <div style={{color: 'white'}}>
-                                <Fab color="primary" className={classes.fabButton}>
-                                    {
-                                        props.home ?
-                                            (recording ?
-                                                <GraphicEqIcon/>
-                                                :
-                                                <MicIcon/>)
-                                            :
-                                            <HomeOutlinedIcon/>
-                                    }
-                                </Fab>
-                            </div>
-                        </Link>
 
+                    {(!props.done || !props.home) ?
+                        <Link
+                            to="/"
+                            onClick={() => homeButton()}
+                            style={{color: 'white'}}
+                        >
+                            <Fab color="primary" className={classes.fabButton}>
+                                {
+                                    ((props.home && SpeechRecognition.browserSupportsSpeechRecognition()) ?
+                                        (recording ? <GraphicEqIcon/> : <MicIcon/>)
+                                        :
+                                        <HomeOutlinedIcon/>)
+                                }
+                            </Fab>
+                        </Link>
                         :
                         null
                     }
-                    <div className={classes.grow} />
-                    <Link to="/">
-                        <div style={{color: 'white'}}>
-                            <IconButton edge="end" color="inherit" aria-label="open drawer">
-                                <TodayIcon />
-                            </IconButton>
-                        </div>
+
+                    <div className={classes.grow}/>
+
+                    <Link to="/" style={{color: 'white'}}>
+                        <IconButton edge="end" color="inherit">
+                            <TodayIcon/>
+                        </IconButton>
                     </Link>
                 </Toolbar>
             </AppBar>

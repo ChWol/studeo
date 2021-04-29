@@ -1,4 +1,7 @@
+// React imports
 import React from 'react';
+
+// Material UI library
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -13,13 +16,10 @@ import CodeIcon from '@material-ui/icons/Code';
 import BookOutlinedIcon from '@material-ui/icons/BookOutlined';
 import BrushOutlinedIcon from '@material-ui/icons/BrushOutlined';
 import EuroIcon from '@material-ui/icons/Euro';
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from '@material-ui/icons/Close';
 import Alert from "@material-ui/lab/Alert";
 
-
+// Material UI stylings
 const useStyles = makeStyles((theme) => ({
     text: {
         padding: theme.spacing(2, 2, 0),
@@ -30,43 +30,22 @@ const useStyles = makeStyles((theme) => ({
     list: {
         marginBottom: theme.spacing(2),
     },
-    subheader: {
-        backgroundColor: theme.palette.background.paper,
-    },
-    appBar: {
-        top: 'auto',
-        bottom: 0,
-    },
-    grow: {
-        flexGrow: 1,
-    },
-    fabButton: {
-        position: 'absolute',
-        zIndex: 1,
-        top: -30,
-        left: 0,
-        right: 0,
-        margin: '0 auto',
-    },
 }));
 
 export default function Subjects(props) {
     const classes = useStyles();
-
+    // State controlling the display of Snackbar
     const [open, setOpen] = React.useState(false);
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
+    // Closing Snackbar
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpen(false);
     };
 
+    // ToDo: Rather map over array
     return (
         <React.Fragment>
             <CssBaseline/>
@@ -74,68 +53,77 @@ export default function Subjects(props) {
                 <Typography className={classes.text} variant="h5" gutterBottom>
                     Fächer
                 </Typography>
-                <List className={classes.list} onClick={() => handleClick()}>
+
+                <List className={classes.list} onClick={() => setOpen(true)}>
                     <ListItem button onClick={() => props.setSubject("Biologie")}>
                         <ListItemAvatar>
                             <FingerprintIcon/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={"Biologie"}
-                            secondary={"Fotosynthese, Stoffwechsel, DNA, ..."}/>
+                            primary="Biologie"
+                            secondary="Fotosynthese, Stoffwechsel, DNA, ..."/>
                     </ListItem>
+
                     <ListItem button onClick={() => props.setSubject("Mathematik")}>
                         <ListItemAvatar>
                             <FunctionsIcon/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={"Mathematik"}
-                            secondary={"Graphen, Ableitung, Exponentialfunktionen, ..."}/>
+                            primary="Mathematik"
+                            secondary="Graphen, Ableitung, Exponentialfunktionen, ..."/>
                     </ListItem>
+
                     <ListItem button onClick={() => props.setSubject("Informatik")}>
                         <ListItemAvatar>
                             <CodeIcon/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={"Informatik"}
-                            secondary={"Objektorientierung, Formale Sprachen, Java, ..."}/>
+                            primary="Informatik"
+                            secondary="Objektorientierung, Formale Sprachen, Java, ..."/>
                     </ListItem>
+
                     <ListItem button onClick={() => props.setSubject("Deutsch")}>
                         <ListItemAvatar>
                             <BookOutlinedIcon/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={"Deutsch"}
-                            secondary={"Klassik, Faust, Goethe, ..."}/>
+                            primary="Deutsch"
+                            secondary="Klassik, Faust, Goethe, ..."/>
                     </ListItem>
+
                     <ListItem button onClick={() => props.setSubject("Kunst")}>
                         <ListItemAvatar>
                             <BrushOutlinedIcon/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={"Kunst"}
-                            secondary={"Kunstgeschichte, Werkanalyse, Architektur, ..."}/>
+                            primary="Kunst"
+                            secondary="Kunstgeschichte, Werkanalyse, Architektur, ..."/>
                     </ListItem>
+
                     <ListItem button onClick={() => props.setSubject("Wirtschaft")}>
                         <ListItemAvatar>
                             <EuroIcon/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={"Wirtschaft"}
-                            secondary={"Keynesianismus, Monetarismus, Magisches Sechseck, ..."}/>
+                            primary="Wirtschaft"
+                            secondary="Keynesianismus, Monetarismus, Magisches Sechseck, ..."/>
                     </ListItem>
                 </List>
             </Paper>
-            <div>
-                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
-                          anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'left',
-                          }}>
-                    <Alert onClose={handleClose} severity="success">
-                        Fach geändert: <b>{props.subject}</b>
-                    </Alert>
-                </Snackbar>
-            </div>
+
+            <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+            >
+                <Alert onClose={handleClose} severity="success">
+                    Fach geändert: <b>{props.subject}</b>
+                </Alert>
+            </Snackbar>
         </React.Fragment>
     );
 }
