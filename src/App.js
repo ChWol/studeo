@@ -8,7 +8,8 @@ import Footer from "./Footer";
 
 function App() {
     // State controlling if currently displaying home screen
-    const [home, setHome] = useState(true);
+    const [home, setHome] = useState(localStorage.getItem('home') ?
+    localStorage.getItem('home') === 'true' : true);
     // State controlling if explanation process is finished
     const [done, setDone] = useState(false);
     // State storing the answer after the explanation process is finished

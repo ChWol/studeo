@@ -43,11 +43,12 @@ export default function BottomAppBar(props) {
     // State controlling if a recording process is running
     const [recording, setRecording] = useState(false);
     // State storing the recognized spoken text
-    const {transcript} = useSpeechRecognition()
+    const {transcript, resetTranscript} = useSpeechRecognition()
 
     // Storing the completed answer, stopping the recording in the end
     function end() {
         props.setAnswer(transcript);
+        resetTranscript();
         SpeechRecognition.stopListening();
         props.setDone(true);
     }
@@ -57,15 +58,27 @@ export default function BottomAppBar(props) {
         // Only functional behaviour on home page and if browser supports recognition
         if (props.home && SpeechRecognition.browserSupportsSpeechRecognition()) {
             // Either starting or stopping the current recording
-            recording ? end() : SpeechRecognition.startListening({continuous: true, language: 'de-DE'});
+            if (recording) {
+                end();
+            }
+            else {
+                props.setAnswer("");
+                SpeechRecognition.startListening({continuous: true, language: 'de-DE'});
+            }
             setRecording(!recording);
         }
         // Returning to home page
         else {
             // Safety line
             setRecording(false);
+            localStorage.setItem('home', 'true');
             props.setHome(true);
         }
+    }
+
+    function menuClick() {
+        localStorage.setItem('home', 'false');
+        props.setHome(false);
     }
 
     return (
@@ -74,7 +87,7 @@ export default function BottomAppBar(props) {
                 <Toolbar>
                     <Link
                         to="/subjects"
-                        onClick={() => props.setHome(false)}
+                        onClick={() => menuClick()}
                         style={{color: 'white'}}
                     >
                         <IconButton edge="start" color="inherit">

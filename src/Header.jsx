@@ -22,6 +22,12 @@ const useStyles = makeStyles(() => ({
 
 export default function Header(props) {
     const classes = useStyles();
+
+    function menuClick() {
+        localStorage.setItem('home', 'false');
+        props.setHome(false);
+    }
+
     return (
         <div>
             <AppBar position="static" style={{backgroundColor: "#087cfc"}}>
@@ -34,7 +40,7 @@ export default function Header(props) {
 
                     <Link
                         to="/user"
-                        onClick={() => props.setHome(false)}
+                        onClick={() => menuClick()}
                         style={{color: 'white'}}
                     >
                         <IconButton color="inherit">
